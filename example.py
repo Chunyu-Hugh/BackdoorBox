@@ -68,7 +68,7 @@ badnets = core.BadNets(
     poisoned_rate=0.05,
     pattern=pattern,
     weight=weight,
-    poisoned_transform_index=0,
+    poisoned_transform_train_index=0,
     poisoned_target_transform_index=0,
     schedule=None,
     seed=666
@@ -114,34 +114,6 @@ schedule = {
 
     'save_dir': 'experiments',
     'experiment_name': 'train_benign_DatasetFolder-CIFAR10'
-}
-
-badnets.train(schedule)
-
-# train attacked model
-schedule = {
-    'device': 'GPU',
-    'CUDA_VISIBLE_DEVICES': '0',
-    'GPU_num': 1,
-
-    'benign_training': False,
-    'batch_size': 128,
-    'num_workers': 16,
-
-    'lr': 0.1,
-    'momentum': 0.9,
-    'weight_decay': 5e-4,
-    'gamma': 0.1,
-    'schedule': [150, 180],
-
-    'epochs': 200,
-
-    'log_iteration_interval': 100,
-    'test_epoch_interval': 10,
-    'save_epoch_interval': 10,
-
-    'save_dir': 'experiments',
-    'experiment_name': 'train_poisoned_DatasetFolder-CIFAR10'
 }
 
 badnets.train(schedule)

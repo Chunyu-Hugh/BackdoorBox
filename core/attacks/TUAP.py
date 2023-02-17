@@ -91,7 +91,7 @@ class AddDatasetFolderTrigger(AddTrigger):
         pattern (torch.Tensor): shape (C, H, W) or (H, W).
         weight (torch.Tensor): shape (C, H, W) or (H, W).
     """
-
+    
     def __init__(self, pattern, mask):
         super(AddDatasetFolderTrigger, self).__init__()
         self.pattern = pattern * torch.tensor(255)  # the range of pattern lies in [-1,1]

@@ -168,8 +168,8 @@ class Base(object):
 
         optimizer = torch.optim.SGD(self.model.parameters(), lr=self.current_schedule['lr'], momentum=self.current_schedule['momentum'], weight_decay=self.current_schedule['weight_decay'])
 
-        work_dir = osp.join(self.current_schedule['save_dir'], self.current_schedule['experiment_name'] + '_' + time.strftime("%Y-%m-%d_%H:%M:%S", time.localtime()))
-        os.makedirs(work_dir, exist_ok=True)
+        work_dir = osp.join(self.current_schedule['save_dir'], self.current_schedule['experiment_name'] + '_' )
+        os.makedirs(work_dir , exist_ok=True)
         log = Log(osp.join(work_dir, 'log.txt'))
 
         # log and output:
@@ -184,8 +184,10 @@ class Base(object):
         log(msg)
 
         for i in range(self.current_schedule['epochs']):
+            print(f"Epoch {i+1}/{self.current_schedule['epochs']}")
             self.adjust_learning_rate(optimizer, i)
             for batch_id, batch in enumerate(train_loader):
+                print(len(batch))
                 batch_img = batch[0]
                 batch_label = batch[1]
                 batch_img = batch_img.to(device)
@@ -197,7 +199,7 @@ class Base(object):
                 optimizer.step()
 
                 iteration += 1
-
+                print("1 eopches 即将结束")
                 if iteration % self.current_schedule['log_iteration_interval'] == 0:
                     msg = time.strftime("[%Y-%m-%d_%H:%M:%S] ", time.localtime()) + f"Epoch:{i+1}/{self.current_schedule['epochs']}, iteration:{batch_id + 1}/{len(self.poisoned_train_dataset)//self.current_schedule['batch_size']}, lr: {self.current_schedule['lr']}, loss: {float(loss)}, time: {time.time()-last_time}\n"
                     last_time = time.time()
@@ -313,7 +315,7 @@ class Base(object):
         else:
             device = torch.device("cpu")
 
-        work_dir = osp.join(self.current_schedule['save_dir'], self.current_schedule['experiment_name'] + '_' + time.strftime("%Y-%m-%d_%H:%M:%S", time.localtime()))
+        work_dir = osp.join(self.current_schedule['save_dir'], self.current_schedule['experiment_name'] + '_' )
         os.makedirs(work_dir, exist_ok=True)
         log = Log(osp.join(work_dir, 'log.txt'))
 
