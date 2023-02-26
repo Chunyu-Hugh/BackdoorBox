@@ -73,6 +73,7 @@ class AddDatasetFolderTrigger(AddTrigger):
         """
 
         def add_trigger(img):
+            print(img.dim())
             if img.dim() == 2:
                 img = img.unsqueeze(0)
                 img = self.add_trigger(img)

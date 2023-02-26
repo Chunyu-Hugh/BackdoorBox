@@ -187,7 +187,7 @@ class Base(object):
             print(f"Epoch {i+1}/{self.current_schedule['epochs']}")
             self.adjust_learning_rate(optimizer, i)
             for batch_id, batch in enumerate(train_loader):
-                print(len(batch))
+                # print(len(batch))
                 batch_img = batch[0]
                 batch_label = batch[1]
                 batch_img = batch_img.to(device)
@@ -199,7 +199,7 @@ class Base(object):
                 optimizer.step()
 
                 iteration += 1
-                print("1 eopches 即将结束")
+                
                 if iteration % self.current_schedule['log_iteration_interval'] == 0:
                     msg = time.strftime("[%Y-%m-%d_%H:%M:%S] ", time.localtime()) + f"Epoch:{i+1}/{self.current_schedule['epochs']}, iteration:{batch_id + 1}/{len(self.poisoned_train_dataset)//self.current_schedule['batch_size']}, lr: {self.current_schedule['lr']}, loss: {float(loss)}, time: {time.time()-last_time}\n"
                     last_time = time.time()
